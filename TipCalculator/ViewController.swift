@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var moneyPerFourLabel: UILabel!
     
     let priceZero: NSNumber = 0
-    let userDefault = UserDefaults()
+    let userDefault = UserDefaults.standard
     var percentage: Double = 0.0
     
     // Actions
@@ -54,6 +54,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onPercentageSegmentChange(_ sender: UISegmentedControl) {
+        
+        self.moneyTextField.resignFirstResponder()
+        
         self.percentage = Double((self.percentageSegment.titleForSegment(at: self.percentageSegment.selectedSegmentIndex)?.replacingOccurrences(of: "%", with: ""))!)!
         
         guard let price = Double(self.moneyTextField.text!) else {
@@ -64,6 +67,17 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func onSettingTap(_ sender: UIBarButtonItem) {
+        
+        let tip1 = Double((self.percentageSegment.titleForSegment(at: 0)?.replacingOccurrences(of: "%", with: ""))!)!
+        let tip2 = Double((self.percentageSegment.titleForSegment(at: 1)?.replacingOccurrences(of: "%", with: ""))!)!
+        let tip3 = Double((self.percentageSegment.titleForSegment(at: 2)?.replacingOccurrences(of: "%", with: ""))!)!
+        
+        userDefault.set(tip1, forKey: "tip1")
+        userDefault.set(tip2, forKey: "tip2")
+        userDefault.set(tip3, forKey: "tip3")
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,11 +93,14 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         
-        self.percentageSegment.setTitle("\(userDefault.double(forKey: "tip1"))%", forSegmentAt: 0)
-        self.percentageSegment.setTitle("\(userDefault.double(forKey: "tip2"))%", forSegmentAt: 1)
-        self.percentageSegment.setTitle("\(userDefault.double(forKey: "tip3"))%", forSegmentAt: 2)
+        guard let tip1: Double = userDefault.object(forKey: "tip1") as! Double? else { return }
+        guard let tip2: Double = userDefault.object(forKey: "tip2") as! Double? else { return }
+        guard let tip3: Double = userDefault.object(forKey: "tip3") as! Double? else { return }
+        
+        self.percentageSegment.setTitle("\(tip1)%", forSegmentAt: 0)
+        self.percentageSegment.setTitle("\(tip2)%", forSegmentAt: 1)
+        self.percentageSegment.setTitle("\(tip3)%", forSegmentAt: 2)
 
         self.percentage = Double((self.percentageSegment.titleForSegment(at: self.percentageSegment.selectedSegmentIndex)?.replacingOccurrences(of: "%", with: ""))!)!
         
@@ -99,10 +116,26 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let settingVC = segue.destination as! SettingViewController
+        
+        let tip1 = Double((self.percentageSegment.titleForSegment(at: 0)?.replacingOccurrences(of: "%", with: ""))!)!
+        let tip2 = Double((self.percentageSegment.titleForSegment(at: 1)?.replacingOccurrences(of: "%", with: ""))!)!
+        let tip3 = Double((self.percentageSegment.titleForSegment(at: 2)?.replacingOccurrences(of: "%", with: ""))!)!
+        
+        settingVC.tip1 = tip1
+        settingVC.tip2 = tip2
+        settingVC.tip3 = tip3
+    }
 
 
 }
 
+extension ViewController: UITextFieldDelegate {
+}
+
+// Utils
 extension ViewController {
     func formatWithCurrency(price: NSNumber) -> String{
         
