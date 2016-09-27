@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var moneyTextField: UITextField!
     @IBOutlet weak var percentageSegment: UISegmentedControl!
     
+    @IBOutlet weak var resultView: UIView!
     
     @IBOutlet weak var tipLabel: UILabel!
     
@@ -33,6 +34,12 @@ class ViewController: UIViewController {
     
     // Actions
     @IBAction func onMoneyTextFieldChange(_ sender: UITextField) {
+        
+//        UIView.animate(withDuration: 0.5) {
+//            self.resultView.alpha = 1
+//        }
+
+        
         self.percentage = Double((self.percentageSegment.titleForSegment(at: self.percentageSegment.selectedSegmentIndex)?.replacingOccurrences(of: "%", with: ""))!)!
         
         guard (sender.text?.characters.count)! > 0 else {
@@ -88,11 +95,14 @@ class ViewController: UIViewController {
         self.moneyPerThreeLabel.text = formatWithCurrency(price: priceZero)
         self.moneyPerFourLabel.text = formatWithCurrency(price: priceZero)
         
+//        self.resultView.alpha = 0
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.moneyTextField.becomeFirstResponder()
         
         guard let tip1: Double = userDefault.object(forKey: "tip1") as! Double? else { return }
         guard let tip2: Double = userDefault.object(forKey: "tip2") as! Double? else { return }
@@ -107,6 +117,7 @@ class ViewController: UIViewController {
         guard let price = Double(self.moneyTextField.text!) else {
             return
         }
+        
         
         self.updateTipMoney(price: price)
 

@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5aS-81-peR">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5aS-81-peR">
                                 <color key="tintColor" red="1" green="0.53543605770000002" blue="0.40784029300000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="G99-cC-6i2"/>
@@ -154,6 +154,7 @@
                         <outlet property="moneyPerTwoLabel" destination="vTe-04-03v" id="jvX-zV-RgF"/>
                         <outlet property="moneyTextField" destination="5aS-81-peR" id="CO1-z0-NXd"/>
                         <outlet property="percentageSegment" destination="ZnU-EX-aa9" id="V04-ld-cLt"/>
+                        <outlet property="resultView" destination="DMK-dM-7lt" id="cjl-yw-yQ2"/>
                         <outlet property="tipLabel" destination="W2a-aj-S0N" id="29Q-6a-gPa"/>
                     </connections>
                 </viewController>
@@ -239,7 +240,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SS2-f1-JIu" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="3cL-IJ-FhA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3cL-IJ-FhA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="0.53543605770000002" blue="0.40784029300000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

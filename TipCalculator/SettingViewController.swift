@@ -49,11 +49,21 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tipOneTextField.delegate = self
+        tipTwoTextField.delegate = self
+        tipThreeTextField.delegate = self
+        
         print(userDefault.object(forKey: "tip1"))
         
         tipOneTextField.text = "\(tip1!)"
         tipTwoTextField.text = "\(tip2!)"
         tipThreeTextField.text = "\(tip3!)"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        tipOneTextField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,4 +72,19 @@ class SettingViewController: UIViewController {
     }
 
 
+}
+
+extension SettingViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if tipOneTextField.isFirstResponder {
+            tipTwoTextField.resignFirstResponder()
+            tipThreeTextField.resignFirstResponder()
+        } else if tipTwoTextField.isFirstResponder{
+            tipOneTextField.resignFirstResponder()
+            tipThreeTextField.resignFirstResponder()
+        }else{
+            tipOneTextField.resignFirstResponder()
+            tipTwoTextField.resignFirstResponder()
+        }
+    }
 }
